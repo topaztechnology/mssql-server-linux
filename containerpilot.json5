@@ -1,0 +1,32 @@
+{
+  consul: "localhost:8500",
+  logging: {
+    level: "{{ .LOG_LEVEL | default "INFO" }}"
+  },
+  jobs: [
+    {
+      name: "mssql",
+      exec: "/opt/mssql/bin/sqlservr",
+      restarts: "unlimited",
+      health: {
+        exec: [
+          "sh",
+          "-c",
+          "/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P {{ .SA_PASSWORD }} -b -i /usr/local/bin/check-sql.sql > /dev/null 2>&1"
+        ],
+        interval: 5,
+        ttl: 10,
+        timeout: "5s"
+      }
+    }, {
+      name: "topaz-setup",
+      exec: "/usr/local/bin/mssql-setup.sh",
+      restarts: "never",
+      stopTimeout: "30s",
+      when: {
+        source: "mssql",
+        once: "healthy"
+      }
+    }
+  ]
+}
