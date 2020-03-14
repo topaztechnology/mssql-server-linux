@@ -1,5 +1,5 @@
-FROM microsoft/mssql-server-linux:2017-CU9
-MAINTAINER Topaz Tech Ltd <info@topaz.technology>
+FROM mcr.microsoft.com/mssql/server:2019-CU3-ubuntu-16.04
+LABEL maintainer="info@topaz.technology"
 
 # To meet SQL Server complexity requirements
 ENV SA_PASSWORD P4ssw0rd
@@ -8,6 +8,8 @@ ENV SA_PASSWORD P4ssw0rd
 ENV CONTAINERPILOT_VERSION 3.8.0
 ENV CONTAINERPILOT_RELEASES https://github.com/joyent/containerpilot/releases/download
 ENV CONTAINERPILOT_CHECKSUM 84642c13683ddae6ccb63386e6160e8cb2439c26
+
+USER root
 
 RUN \
   apt-get update && \

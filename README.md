@@ -1,10 +1,11 @@
 # Supported tags and respective `Dockerfile` links
 * `latest` [(Dockerfile)](https://github.com/topaztechnology/mssql-server-linux/blob/master/Dockerfile) - the latest release
-* `2017-CU9` [(Dockerfile)](https://github.com/topaztechnology/mssql-server-linux/blob/master/Dockerfile) - release based on 2017-CU9 image
+* `2019-CU3` [(Dockerfile)](https://github.com/topaztechnology/mssql-server-linux/blob/2019-CU3/Dockerfile) - release based on 2019-CU3-ubuntu-16.04 image
+* `2017-CU9` [(Dockerfile)](https://github.com/topaztechnology/mssql-server-linux/blob/2017-CU9/Dockerfile) - release based on 2017-CU9 image
 
 # Overview
 
-A SQL Server for Linux image derived from Microsoft's [SQL Server Linux](https://hub.docker.com/r/microsoft/mssql-server-linux/) image, but also allows creation of a login and database on startup. This is useful in devops testing scenarios.
+A SQL Server for Linux image derived from Microsoft's [SQL Server Linux](https://hub.docker.com/_/microsoft-mssql-server) image, but also allows creation of a login and database on startup. This is useful in devops testing scenarios.
 
 Joyent's [Containerpilot](https://www.joyent.com/containerpilot) is used to manage job scheduling and health checks.
 
