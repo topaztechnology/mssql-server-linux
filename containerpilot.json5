@@ -19,7 +19,7 @@
         timeout: "5s"
       }
     }, {
-      name: "topaz-setup",
+      name: "mssql-setup",
       exec: "/usr/local/bin/mssql-setup.sh",
       restarts: "never",
       stopTimeout: "30s",

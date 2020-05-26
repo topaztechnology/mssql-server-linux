@@ -1,0 +1,7 @@
+IF NOT EXISTS(SELECT * FROM sys.databases WHERE name = '${MY_DB1}')
+	CREATE DATABASE ${MY_DB1}
+GO
+
+IF NOT EXISTS(SELECT * FROM sys.databases WHERE name = '${MY_DB2}')
+	CREATE DATABASE ${MY_DB2}
+GO

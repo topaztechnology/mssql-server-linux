@@ -40,3 +40,20 @@ EOF
   echo Creating database ${SQL_DB}
   /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P ${SA_PASSWORD} -b -i /tmp/create-db.sql > /dev/null 2>&1
 fi
+
+shopt -s nullglob
+echo Looking for scripts in /init.sql
+for SQL_FILE in /init.sql/*.sql
+do
+  echo Running SQL script $SQL_FILE
+  
+  # Basic templating with bash substitutions
+  echo 'cat <<EOF' > /tmp/sql-script.sh
+  cat "$SQL_FILE" >> /tmp/sql-script.sh
+  echo 'EOF' >> /tmp/sql-script.sh
+  bash /tmp/sql-script.sh >> /tmp/sql-script.sql
+  rm /tmp/sql-script.sh
+
+  /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P ${SA_PASSWORD} -b -i /tmp/sql-script.sql
+  rm /tmp/sql-script.sql
+done
