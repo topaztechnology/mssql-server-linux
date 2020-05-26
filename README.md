@@ -1,5 +1,6 @@
 # Supported tags and respective `Dockerfile` links
 * `latest` [(Dockerfile)](https://github.com/topaztechnology/mssql-server-linux/blob/master/Dockerfile) - the latest release
+* `2019-CU4` [(Dockerfile)](https://github.com/topaztechnology/mssql-server-linux/blob/2019-CU4/Dockerfile) - release based on 2019-CU4-ubuntu-16.04 image
 * `2019-CU3` [(Dockerfile)](https://github.com/topaztechnology/mssql-server-linux/blob/2019-CU3/Dockerfile) - release based on 2019-CU3-ubuntu-16.04 image
 * `2017-CU9` [(Dockerfile)](https://github.com/topaztechnology/mssql-server-linux/blob/2017-CU9/Dockerfile) - release based on 2017-CU9 image
 
@@ -12,6 +13,10 @@ Joyent's [Containerpilot](https://www.joyent.com/containerpilot) is used to mana
 # How to use this image
 
 `docker run -e 'ACCEPT_EULA=Y' -e 'SQL_USER=docker' -e 'SQL_PASSWORD=docker' -e 'SQL_DB=docker' -p 1433:1433 -d topaztechnology/mssql-server-linux:latest`
+
+# Initialisation scripts
+
+Any scripts `*.sql` found in `/init.sql` will be executed after actions initiated by the presence of either `SQL_USER`, `SQL_PASSWORD`, or `SQL_DB` below. Any scripts should be idempotent, as they will be called each time the container starts up. Scripts can contain environment variables in standard bash format which will be expanded before the script is run, see `examples` directory.
 
 # Environment variables
 
