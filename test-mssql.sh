@@ -3,7 +3,6 @@
 docker run \
   --rm \
   --name mssql-test \
-  -e ACCEPT_EULA=Y \
   -e SQL_USER=docker \
   -e SQL_PASSWORD=docker \
   -e SQL_DB=docker \
