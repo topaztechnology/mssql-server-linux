@@ -6,13 +6,13 @@
   jobs: [
     {
       name: "mssql",
-      exec: "/opt/mssql/bin/sqlservr",
+      exec: "/opt/mssql/bin/sqlservr --accept-eula",
       restarts: "unlimited",
       health: {
         exec: [
           "sh",
           "-c",
-          "/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P {{ .SA_PASSWORD }} -b -i /usr/local/bin/check-sql.sql > /dev/null 2>&1"
+          "/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P {{ .SA_PASSWORD }} -b -i /opt/mssql-init/sql/check-sql.sql > /dev/null 2>&1"
         ],
         interval: 5,
         ttl: 10,
@@ -20,7 +20,7 @@
       }
     }, {
       name: "mssql-setup",
-      exec: "/usr/local/bin/mssql-setup.sh",
+      exec: "/opt/mssql-init/bin/mssql-setup.sh",
       restarts: "never",
       stopTimeout: "30s",
       when: {

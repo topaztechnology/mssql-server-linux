@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/mssql/server:2019-CU4-ubuntu-16.04
+FROM mcr.microsoft.com/mssql/server:2019-CU8-ubuntu-16.04
 LABEL maintainer="info@topaz.technology"
 
 # To meet SQL Server complexity requirements
@@ -13,7 +13,7 @@ USER root
 
 RUN \
   apt-get update && \
-  apt-get install -y curl
+  apt-get install -y curl unzip gettext
 
 # Install Containerpilot
 RUN \
@@ -24,10 +24,19 @@ RUN \
   rm /tmp/containerpilot.tar.gz
 
 RUN \
-  mkdir /init.sql
+  curl -Lso /tmp/sqlpackage.zip https://go.microsoft.com/fwlink/?linkid=873926 && \
+  unzip -qq /tmp/sqlpackage.zip -d /opt/sqlpackage && \
+  chmod +x /opt/sqlpackage/sqlpackage && \
+  rm /tmp/sqlpackage.zip 
 
-COPY mssql-setup.sh /usr/local/bin/
-COPY check-sql.sql /usr/local/bin/
+RUN \
+  mkdir /init.bacpac \
+  mkdir /init.sql \
+  mkdir -p /opt/mssql-init/bin \
+  mkdir -p /opt/mssql-init/sql
+
+COPY bin/* /opt/mssql-init/bin/
+COPY sql/* /opt/mssql-init/sql/
 COPY containerpilot.json5 /etc/containerpilot.json5
 
 ENV CONTAINERPILOT /etc/containerpilot.json5

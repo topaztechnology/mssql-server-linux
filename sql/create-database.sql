@@ -1,0 +1,2 @@
+IF NOT EXISTS(SELECT * FROM sys.databases WHERE name = '${SQL_DB}')
+  CREATE DATABASE ${SQL_DB}
